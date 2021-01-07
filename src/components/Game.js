@@ -16,18 +16,24 @@ const Game = () => {
   const [submissions, setSubmissions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);;
 
-  const onSubmitForm = (newLine) => {
+  const onSubmitForm = (line) => {
+    const newPoemLine = [...submissions];
 
     const formatLine = FIELDS.map((field) => {
       if (field.key) {
-        return newLine[field.key];
+        return line[field.key];
       } else {
         return field;
       }
     }).join(' ');
 
-    setSubmissions([...submissions, formatLine]);
-  }
+    newPoemLine.push(formatLine);
+    setSubmissions(newPoemLine);
+  };
+
+  const revealPoem = () => {
+    setIsSubmitted(true);
+  };
 
   return (
     <div className="Game">
@@ -38,14 +44,14 @@ const Game = () => {
       <p>Please follow the following format for your poetry submission:</p>
 
       <p className="Game__format-example">
-        { exampleFormat }
+        {exampleFormat}
       </p>
-   
-     <RecentSubmission submission={submissions[submissions.length - 1] || ''}  />
 
-    <PlayerSubmissionForm sendSubmission={onSubmitForm} index={submissions.length + 1} fields={FIELDS}/>
+      <RecentSubmission submission={submissions[submissions.length - 1] || ''} />
 
-    <FinalPoem submissions={submissions} isSubmitted={isSubmitted}/>
+      <PlayerSubmissionForm sendSubmission={onSubmitForm} index={submissions.length + 1} fields={FIELDS} />
+
+      <FinalPoem submissions={submissions} isSubmitted={isSubmitted} revealPoem={revealPoem} />
 
     </div>
   );
