@@ -16,15 +16,14 @@ const PlayerSubmissionForm = (props) => {
 
   const onFormChange = (e) => {
     setInputForm({
-      ...inputForm, 
-      [e.target.name]: e.target.value})
-  }
+      ...inputForm,
+      [e.target.name]: e.target.value
+    })
+  };
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-
     props.sendSubmission(inputForm);
-
     setInputForm({
       adj1: '',
       noun1: '',
@@ -33,67 +32,36 @@ const PlayerSubmissionForm = (props) => {
       adj2: '',
       noun2: '',
     });
+  };
 
-  }
+  const isEmpty = (name) => {
+    return name === '';
+  };
 
-  const [poemLines, setPoemsLines] = useState([]);
-
-  const onSubmitForm(e, newPoem) {
-    setPoemsLines([...inputForm, newPoem]);
-  }
   return (
     <div className="PlayerSubmissionForm">
-      <h3>Player Submission Form for Player #{ props.index }</h3>
-
+      <h3>Player Submission Form for Player #{props.index}</h3>
       <form className="PlayerSubmissionForm__form" onSubmit={onSubmitForm} >
-
         <div className="PlayerSubmissionForm__poem-inputs">
 
-          <span>The</span>
-          <input
-            name="adj1"
-            placeholder="adjective"
-            type="text"
-            onChange={onFormChange}
-            value={inputForm.adj1} />
+          {props.fields.map((value, i) => {
+            if (value.key) {
+              return (
+                <input
+                  key={`${i}`}
+                  name={`${value.key}`}
+                  placeholder={`${value.placeholder}`}
+                  onChange={onFormChange}
+                  type='text'
+                  value={inputForm[value.key] || ''}
+                  className={isEmpty(inputForm[`${value.key}`]) ? 'empty' : 'filled'}
+                />
+              );
+            } else {
+              return value;
+            };
+          })}
 
-          <input	         
-            name="noun1"
-            placeholder="noun"
-            type="text" 
-            onChange={onFormChange}
-            value={inputForm.noun1} />
-
-          <input
-            name="adv"
-            placeholder="adverb"
-            type="text"
-            onChange={onFormChange}
-            value={inputForm.adv} />
-
-          <input
-            name="verb"
-            placeholder="verb"
-            type="text"
-            onChange={onFormChange} 
-            value={inputForm.verb}/>
-
-          <span>the</span>
-
-          <input
-            name="adj2"
-            placeholder="adjective"
-            type="text"
-            onChange={onFormChange}
-            value={inputForm.adj2} />
-          <input
-            name="noun2"
-            placeholder="noun"
-            type="text"
-            onChange={onFormChange}
-            value={inputForm.noun2} />
-
-          <span>.</span>
         </div>
 
         <div className="PlayerSubmissionForm__submit">
@@ -117,3 +85,4 @@ PlayerSubmissionForm.propTypes = {
 }
 
 export default PlayerSubmissionForm;
+
