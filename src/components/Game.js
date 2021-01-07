@@ -46,12 +46,11 @@ const Game = () => {
       <p className="Game__format-example">
         {exampleFormat}
       </p>
+      {isSubmitted ? null : 
+      [ <RecentSubmission submission={submissions[submissions.length - 1] || ''} />,
+        <PlayerSubmissionForm sendSubmission={onSubmitForm} index={submissions.length + 1} fields={FIELDS} />]}
 
-      <RecentSubmission submission={submissions[submissions.length - 1] || ''} />
-
-      <PlayerSubmissionForm sendSubmission={onSubmitForm} index={submissions.length + 1} fields={FIELDS} />
-
-      <FinalPoem submissions={submissions} isSubmitted={isSubmitted} revealPoem={revealPoem} />
+        <FinalPoem submissions={submissions} isSubmitted={isSubmitted} revealPoem={revealPoem} />
 
     </div>
   );
