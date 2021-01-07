@@ -3,23 +3,30 @@ import PropTypes from 'prop-types';
 import './FinalPoem.css';
 
 const FinalPoem = (props) => {
-
-  return (
-    <div className="FinalPoem">
-      <section className="FinalPoem__poem">
-        <h3>Final Poem</h3>
-        <div>
-        <div>
-          {props.submissions.map((line, i) => (<p key={i}>{line}</p>))}
+  
+  const revealedPoem = 
+    <section className="FinalPoem__poem">
+      <h3>Final Poem</h3>
+      { props.submissions.map((value, i) => {
+        return <p key={i}>{value}</p>
+      })}
+    </section>
+  
+  const poemButton = 
+        <div className="FinalPoem__reveal-btn-container">
+          <input 
+            type="button" 
+            value="We are finished: Reveal the Poem" 
+            className="FinalPoem__reveal-btn" 
+            onClick={ props.revealPoem }/>
         </div>
-        </div>
-      </section>
 
-      <div className="FinalPoem__reveal-btn-container">
-        <input type="button" value="We are finished: Reveal the Poem" className="FinalPoem__reveal-btn" onClick={props.isSubmitted} />
+  const showPoem = props.isSubmitted ? revealedPoem : poemButton
+    return (
+      <div className="FinalPoem">
+        {showPoem}
       </div>
-    </div>
-  );
+    );
 }
 
 FinalPoem.propTypes = {
@@ -29,4 +36,3 @@ FinalPoem.propTypes = {
 };
 
 export default FinalPoem;
-
