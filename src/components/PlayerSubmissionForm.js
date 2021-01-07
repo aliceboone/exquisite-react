@@ -3,13 +3,32 @@ import PropTypes from 'prop-types';
 
 import './PlayerSubmissionForm.css';
 
-const PlayerSubmissionForm = () => {
+const PlayerSubmissionForm = (props) => {
+
+  const [inputForm, setInputForm] = useState();
+
+  const onFormChange = (e) => {
+    setInputForm({
+      ...inputForm, 
+      [e.target.name]: e.target.value})
+  }
+
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+
+    props.sendSubmission(inputForm);
+  }
+
+  const [poemLines, setPoemsLines] = useState([]);
+
+  const onSubmitForm(e, newPoem) {
+    setInputForm([...inputForm, newPoem]);
+  }
   return (
     <div className="PlayerSubmissionForm">
-      <h3>Player Submission Form for Player #{  }</h3>
+      <h3>Player Submission Form for Player #{ props.index }</h3>
 
-      <form className="PlayerSubmissionForm__form" >
-
+      <form className="PlayerSubmissionForm__form" onSubmit={onSubmitForm} >
         <div className="PlayerSubmissionForm__poem-inputs">
 
           {
