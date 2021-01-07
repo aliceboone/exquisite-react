@@ -13,6 +13,22 @@ const Game = () => {
     }
   }).join(' ');
 
+  const [submissions, setSubmissions] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);;
+
+  const onSubmitForm = (newLine) => {
+
+    const formatLine = FIELDS.map((field) => {
+      if (field.key) {
+        return newLine[field.key];
+      } else {
+        return field;
+      }
+    }).join(' ');
+
+    setSubmissions([...submissions, formatLine]);
+  }
+
   return (
     <div className="Game">
       <h2>Game</h2>
@@ -24,12 +40,12 @@ const Game = () => {
       <p className="Game__format-example">
         { exampleFormat }
       </p>
+   
+     <RecentSubmission submission={submissions[submissions.length - 1] || ''}  />
 
-      <RecentSubmission />
+    <PlayerSubmissionForm sendSubmission={onSubmitForm} index={submissions.length + 1} fields={FIELDS}/>
 
-      <PlayerSubmissionForm />
-
-      <FinalPoem />
+    <FinalPoem submissions={submissions} isSubmitted={isSubmitted}/>
 
     </div>
   );
