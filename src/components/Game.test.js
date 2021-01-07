@@ -101,6 +101,7 @@ describe('Game', () => {
 
     describe('Wave 2:  Showing lines of poetry', () => {
 
+      // eslint-disable-next-line jest/expect-expect
       test('you can enter a line of the poem', () => {
         const line = ['big', 'cat', 'abruptly', 'eats', 'tasty', 'dogfood'];
         // Act-Assert
