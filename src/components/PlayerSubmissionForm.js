@@ -34,9 +34,9 @@ const PlayerSubmissionForm = (props) => {
     });
   };
 
-  const isEmpty = (name) => {
-    return name === '';
-  };
+  // const isEmpty = (name) => {
+  //   return name === '';
+  // };
 
   return (
     <div className="PlayerSubmissionForm">
@@ -54,7 +54,7 @@ const PlayerSubmissionForm = (props) => {
                   onChange={onFormChange}
                   type='text'
                   value={inputForm[value.key] || ''}
-                  className={isEmpty(inputForm[`${value.key}`]) ? 'empty' : 'filled'}
+                  className={!inputForm[value.key] ? 'PlayerSubmissionFormt__input--invalid ' : ''}
                 />
               );
             } else {
